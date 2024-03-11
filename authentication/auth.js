@@ -13,7 +13,7 @@ const caesarCipher = (str, shift) => {
         return l;
     }).join('');
 };
-  
+
 
 
 class Authentication {
@@ -26,11 +26,16 @@ class Authentication {
     }
 
     async signup(username, password) {
-        let fileData = JSON.parse(fs.readFileSync(path.join(__dirname, 'users.json'), {encoding: 'utf8'} ))
+
+        if (!username || !password) {
+            throw 'both fields are required'
+        }
+
+        let fileData = JSON.parse(fs.readFileSync(path.join(__dirname, 'users.json'), { encoding: 'utf8' }))
         const usernames = fileData.map(x => x.username.toLowerCase())
 
         if (usernames.includes(username.toLowerCase())) {
-            throw Error('Username already exists')
+            throw 'Username already exists'
         }
 
         fileData.push({
@@ -48,27 +53,25 @@ class Authentication {
 
     async login(username) {
         let success = false
-        let fileData = JSON.parse(fs.readFileSync(path.join(__dirname, 'users.json'), {encoding: 'utf8'} ))
+        let fileData = JSON.parse(fs.readFileSync(path.join(__dirname, 'users.json'), { encoding: 'utf8' }))
         const user = fileData.find(x => x.username == username)
 
         if (!user) {
-            throw Error('no user with name' + username)
+            throw 'no user found'
         }
 
-        return new Promise((resolve, reject) => {            
-                readline.question(`Please enter password for ${username}: `, async (input) => {
-                    if (user.password == this.encrypt(input)) {
-                    success = true
-                }
-                else {
-                    reject()
-                    throw Error(`Invalid password for user ${username}`)
-                }
+        return new Promise((resolve, reject) => {
+            const input = prompt(`Please enter password for ${username}: `)
 
-                readline.close()
+            if (user.password == this.encrypt(input)) {
+                success = true
+            }
+            else {
+                reject(`invalid password`)
+            }
 
-                return resolve(success ? user : 'Invalid')
-            })
+
+            return resolve(success ? user : 'Invalid')
         })
     }
 }
