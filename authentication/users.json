@@ -1,20 +1,16 @@
 [
    {
-      "username": "Zakleby",
-      "password": "juij_fqiimeht",
-      "dateJoined": 1710762222253,
-      "gamesWon": 0
+      "username": "Computer",
+      "password": "Computer1",
+      "dateJoined": 1711566402405,
+      "gamesWon": 0,
+      "score": 0
    },
    {
-      "username": "Zakleby2",
-      "password": "juij_fqiimeht",
-      "dateJoined": 1711541181815,
-      "gamesWon": 0
-   },
-   {
-      "username": "jacob",
-      "password": "zqser",
-      "dateJoined": 1711541215579,
-      "gamesWon": 0
+      "username": "a",
+      "password": "q",
+      "dateJoined": 1711566402405,
+      "gamesWon": 0,
+      "score": 0
    }
 ]

@@ -26,53 +26,61 @@ class Authentication {
     }
 
     async signup(username, password) {
-
         if (!username || !password) {
-            throw 'both fields are required'
+            throw 'both fields are required';
         }
-
+    
         let fileData = JSON.parse(fs.readFileSync(path.join(__dirname, 'users.json'), { encoding: 'utf8' }))
-        const usernames = fileData.map(x => x.username.toLowerCase())
 
-        if (usernames.includes(username.toLowerCase())) {
-            throw 'Username already exists'
+        if (fileData.length == 0) {
+            fileData.push({
+                username: "Computer",
+                password: "Computer1",
+                dateJoined: Date.now(),
+                gamesWon: 0,
+                score: 0
+            });
         }
 
-        fileData.push({
-            username,
-            password: this.encrypt(password),
-            dateJoined: Date.now(),
-            gamesWon: 0,
-
-        })
-
-        fs.writeFileSync(path.join(__dirname, 'users.json'), JSON.stringify(fileData, null, 3))
-
-        console.log('added user ' + username)
+        const usernames = fileData.map(x => x.username.toLowerCase())
+    
+        if (usernames.includes(username.toLowerCase())) {
+            throw 'Username already exists';
+        }
+    
+        try {
+            fileData.push({
+                username,
+                password: this.encrypt(password),
+                dateJoined: Date.now(),
+                gamesWon: 0,
+                score: 0
+            });
+    
+            fs.writeFileSync(path.join(__dirname, 'users.json'), JSON.stringify(fileData, null, 3));
+    
+        } catch (error) {
+            throw error
+        }
     }
 
     async login(username) {
-        let success = false
         let fileData = JSON.parse(fs.readFileSync(path.join(__dirname, 'users.json'), { encoding: 'utf8' }))
         const user = fileData.find(x => x.username == username)
-
+    
         if (!user) {
-            throw 'no user found'
+            throw 'no user found';
         }
-
+    
         return new Promise((resolve, reject) => {
-            const input = prompt(`Please enter password for ${username}: `)
-
-            if (user.password == this.encrypt(input)) {
-                success = true
+            const input = prompt(`Please enter password for ${username}: `);
+    
+            if (user.password === this.encrypt(input)) {
+                resolve(user);
+            } else {
+                reject('invalid password');
             }
-            else {
-                reject(`invalid password`)
-            }
-
-
-            return resolve(success ? user : 'Invalid')
-        })
+        });
     }
 }
 

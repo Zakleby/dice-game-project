@@ -4,14 +4,16 @@ const path = require("path")
 const prompt = require('prompt-sync')()
 const Authentication = require("../authentication/auth.js")
 const { errorLog, warnLog, successLog, infoLog } = require("../logger.js")
-const loggedIn = []
 const game = require('./game.js')
+const loggedIn = require('../lib/loggedIn.js')
 
 console.clear()
 
 infoLog('Welcome to the game!')
 
 async function start() {
+
+    const authentication = new Authentication()
 
     const display = ["Sign Up"]
 
@@ -39,7 +41,13 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
         console.clear()
         const username = prompt('Enter a unique username: ')
         const password = prompt('Enter a rememberable password: ')
-        new Authentication().signup(username, password).catch((error) => {
+        authentication.signup(username, password)
+        .then(() => {
+            console.clear()
+            successLog(`Account created under the username ${username}.\nTo login with the account, type ${chalk.grey("2")} and then sign in with the username and password`)
+            return start()
+        })
+        .catch((error) => {
             if (error == "Username already exists") {
                 console.clear()
                 errorLog('This username already exists!')
@@ -51,10 +59,6 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
                 start()
             }
             return
-        }).then(() => {
-            console.clear()
-            successLog(`Account created under the username ${username}.\nTo login with the account, type ${chalk.grey("2")} and then sign in with the username and password`)
-            return start()
         })
     }
     else if (response == "login") {
@@ -77,12 +81,15 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
         }
 
         try {
-            const user = await new Authentication().login(username)
+            const user = await authentication.login(username)
             loggedIn.push(user)
-            console.clear()
+            // console.clear()
             successLog(`Welcome back, ${user.username}!`)
             start()
         } catch (err) {
+
+            console.log(err)
+
             if (err == 'no user found') {
                 errorLog('No user found with that username!')
                 start()
