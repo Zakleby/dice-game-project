@@ -103,6 +103,11 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
         }
     }
     else if (response == 'start_game') {
+        if (loggedIn.length == 1) {
+            const authFile = fs.readFileSync(path.join(__dirname, '../authentication/users.json'), { encoding: 'utf8' })
+            const users = JSON.parse(authFile)
+            loggedIn.push(users[0])
+        }
         game(loggedIn)
     }
 
