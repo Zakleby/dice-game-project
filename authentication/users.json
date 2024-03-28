@@ -1,16 +1,1 @@
-[
-   {
-      "username": "Computer",
-      "password": "Computer1",
-      "dateJoined": 1711566402405,
-      "gamesWon": 0,
-      "score": 0
-   },
-   {
-      "username": "a",
-      "password": "q",
-      "dateJoined": 1711566402405,
-      "gamesWon": 0,
-      "score": 0
-   }
-]
+[{"username":"Renato","password":"dejxydw","dateJoined":1711621060312,"gamesWon":0,"score":0},{"username":"Zakleby","password":"Pqaburo","dateJoined":1711621066024,"gamesWon":1,"score":66},{"username":"Computer","password":"Computer1","dateJoined":1711621060312,"gamesWon":0,"score":59}]

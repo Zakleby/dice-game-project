@@ -124,3 +124,5 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
 }
 
 start()
+
+module.exports = start
