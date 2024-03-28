@@ -3,7 +3,7 @@ const fs = require("fs")
 const path = require("path")
 const prompt = require('prompt-sync')()
 const Authentication = require("./authentication/auth.js")
-const { errorLog, warnLog, successLog, infoLog } = require("../logger.js")
+const { errorLog, successLog, infoLog } = require("./lib/logger.js")
 const game = require('./game.js')
 const loggedIn = require('./lib/loggedIn.js')
 
@@ -27,7 +27,6 @@ async function start() {
     if (loggedIn.length < 2) display.push("Login")
     if (loggedIn.length > 0) display.push("Start Game")
     display.push('Exit')
-
 
     console.log(`
 ${chalk.blueBright(`  .-------.    ______`)}
@@ -97,7 +96,7 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
         try {
             const user = await authentication.login(username)
             loggedIn.push(user)
-            // console.clear()
+            console.clear()
             successLog(`Welcome back, ${user.username}!`)
             start()
         } catch (err) {

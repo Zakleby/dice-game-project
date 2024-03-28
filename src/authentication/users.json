@@ -1,1 +1,16 @@
-[]
+[
+   {
+      "username": "Computer",
+      "password": "Computer1",
+      "dateJoined": 1711648576372,
+      "gamesWon": 0,
+      "score": 0
+   },
+   {
+      "username": "a",
+      "password": "q",
+      "dateJoined": 1711648576372,
+      "gamesWon": 0,
+      "score": 0
+   }
+]

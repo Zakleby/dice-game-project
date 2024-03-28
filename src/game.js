@@ -1,10 +1,9 @@
 const chalk = require("chalk")
-const { infoLog, successLog } = require("../logger")
+const { infoLog } = require("./lib/logger")
 const prompt = require('prompt-sync')()
 const { rollTwoDice, dice_art } = require('./lib/diceAnimation')
 const loggedIn = require('./lib/loggedIn')
 const sleep = require('./lib/sleep')
-const start = require("./index")
 const fs = require('fs')
 const path = require('path')
 
