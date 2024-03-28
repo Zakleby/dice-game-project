@@ -1,12 +1,18 @@
 const chalk = require("chalk")
 const { infoLog, successLog } = require("../logger")
 const prompt = require('prompt-sync')()
-const { rollTwoDice, dice_art } = require('../lib/diceAnimation')
-const loggedIn = require('../lib/loggedIn')
-const sleep = require('../lib/sleep')
+const { rollTwoDice, dice_art } = require('./lib/diceAnimation')
+const loggedIn = require('./lib/loggedIn')
+const sleep = require('./lib/sleep')
 const start = require("./index")
 const fs = require('fs')
 const path = require('path')
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
+
 
 async function game() {
     console.clear()
@@ -41,7 +47,7 @@ async function game() {
         loggedIn[0].score = 0
     }
 
-    let authData = JSON.parse(fs.readFileSync(path.join(__dirname, '../authentication/users.json'), { encoding: 'utf8' }))
+    let authData = JSON.parse(fs.readFileSync(path.join(__dirname, './authentication/users.json'), { encoding: 'utf8' }))
     authData = authData.filter(x => x.username != loggedIn[0].username && x.username != loggedIn[1].username)
     
     authData.push(...loggedIn)
@@ -54,7 +60,7 @@ async function game() {
         authData.unshift(computerAccount)
     }
 
-    fs.writeFileSync(path.join(__dirname, '../authentication/users.json'), JSON.stringify(authData, null, 3))
+    fs.writeFileSync(path.join(__dirname, './authentication/users.json'), JSON.stringify(authData, null, 3))
 
 }
 
@@ -91,5 +97,10 @@ async function roll(user) {
         loggedIn[user].score += (dice.dice1 + dice.dice2) - 5
     }
 }
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
 
 module.exports = game

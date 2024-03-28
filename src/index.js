@@ -2,10 +2,17 @@ const chalk = require('chalk')
 const fs = require("fs")
 const path = require("path")
 const prompt = require('prompt-sync')()
-const Authentication = require("../authentication/auth.js")
+const Authentication = require("./authentication/auth.js")
 const { errorLog, warnLog, successLog, infoLog } = require("../logger.js")
 const game = require('./game.js')
-const loggedIn = require('../lib/loggedIn.js')
+const loggedIn = require('./lib/loggedIn.js')
+
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
+
 
 console.clear()
 
@@ -61,6 +68,13 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
             return
         })
     }
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
+
+
     else if (response == "login") {
 
         if (loggedIn.length > 1) {
@@ -104,7 +118,7 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
     }
     else if (response == 'start_game') {
         if (loggedIn.length == 1) {
-            const authFile = fs.readFileSync(path.join(__dirname, '../authentication/users.json'), { encoding: 'utf8' })
+            const authFile = fs.readFileSync(path.join(__dirname, './authentication/users.json'), { encoding: 'utf8' })
             const users = JSON.parse(authFile)
             loggedIn.push(users[0])
         }
@@ -122,6 +136,13 @@ ${chalk.blueBright(`Logged In:`)} ${chalk.grey(`${loggedIn.map(x => x.username).
         return
     }
 }
+
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
+
 
 start()
 

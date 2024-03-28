@@ -1,6 +1,13 @@
 const chalk = require('chalk')
 const sleep = require('./sleep')
 
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
+
+
 const dice_art = {
     1: `┌─────────┐
 │         │
@@ -63,5 +70,11 @@ async function rollTwoDice() {
         }
     }
 }
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
+
 
 module.exports = { dice_art, rollTwoDice }

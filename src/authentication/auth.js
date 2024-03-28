@@ -2,6 +2,11 @@ const fs = require("fs")
 const path = require("path")
 const prompt = require('prompt-sync')()
 
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
+
 const caesarCipher = (str, shift) => {
     const numberToShift = shift > 0 ? shift : 26 + (shift % 26);
     return [...str].map((l, i) => {
@@ -83,5 +88,10 @@ class Authentication {
         });
     }
 }
+
+//////////////////////////////////////////////////
+//       This game was created by Zakleby       //
+// https://github.com/Zakleby/dice-game-project //
+//////////////////////////////////////////////////
 
 module.exports = Authentication
