@@ -14,7 +14,7 @@ async function game() {
 
     for (let i = 0; i < 10; i++) {
 
-        console.log(chalk.bgBlueBright('-- SCORE --') + '\n' + `${loggedIn[0].username} -> ${loggedIn[0].score} points` + '\n' + `${loggedIn[1].username} -> ${loggedIn[1].score} points\n`)
+        console.log(chalk.bgBlueBright('-- SCORE --') + `\n${loggedIn[0].username} -> ${loggedIn[0].score} points\n${loggedIn[1].username} -> ${loggedIn[1].score} points\nRound -> ${Math.round(i/2)}/5\n` )
         if (loggedIn[i%2].username != "Computer") {
             prompt(chalk.magentaBright('[Waiting..]') + ` Waiting for ${loggedIn[i%2].username}... Press ENTER to roll the dice`)
             await roll(i%2)
@@ -32,11 +32,13 @@ async function game() {
         console.log(chalk.greenBright(`${loggedIn[0].username} Won by ${loggedIn[0].score - loggedIn[1].score} points!`))
         loggedIn[0].gamesWon += 1
         loggedIn[0].score = 0
+        loggedIn[1].score = 0
     }
     else {
         console.log(chalk.greenBright(`${loggedIn[1].username} Won by ${loggedIn[1].score - loggedIn[0].score} points!`))
         loggedIn[1].gamesWon += 1
         loggedIn[1].score = 0
+        loggedIn[0].score = 0
     }
 
     let authData = JSON.parse(fs.readFileSync(path.join(__dirname, '../authentication/users.json'), { encoding: 'utf8' }))
@@ -44,16 +46,16 @@ async function game() {
     
     authData.push(...loggedIn)
 
-    fs.writeFileSync(path.join(__dirname, '../authentication/users.json'), JSON.stringify(authData))
 
-    // const replay = prompt(chalk.blueBright('Play Again? (y/n)'))
-    // if (replay == 'y') {
-    //     start()
-    // }
-    // else {
-    //     console.log('Come back another time!')
-    //     process.exit()
-    // }
+    // makes sure the computer account is always at the top of the users.json file
+    let computerIndex = authData.findIndex(entry => entry.username === "Computer");
+    if (computerIndex !== -1 && computerIndex !== 0) {
+        let computerAccount = authData.splice(computerIndex, 1)[0]
+        authData.unshift(computerAccount)
+    }
+
+    fs.writeFileSync(path.join(__dirname, '../authentication/users.json'), JSON.stringify(authData, null, 3))
+
 }
 
 async function roll(user) {
